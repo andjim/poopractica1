@@ -1,5 +1,5 @@
 #include <iostream>
-#include <stdlib>
+#include <stdlib.h>
 using namespace std;
 
 
@@ -12,19 +12,19 @@ int toCelsi(float f){
 }
 
 void convertor(){
-	char opt;
+	int opt;
 	try{
-		cout<<"============================================================\n";
-		cout<<"=============== Conversor Farenheit - Celsius ==================\n";
-		cout<<"============================================================\n"<<endl;
-		cout<<"\t\t [a] Farenheit a Celsius"<<endl;
-		cout<<"\t\t [b] Celsius a Farenheit"<<endl;
-		cout<<"\t\t cualquier otra tecla [Salir]"<<endl;
+		cout<<"================================================================================"<<endl;
+		cout<<"====================== Conversor Farenheit - Celsius ==========================="<<endl;
+		cout<<"================================================================================"<<endl;
+		cout<<"\t\t [1] Farenheit a Celsius\n"<<endl;
+		cout<<"\t\t [2] Celsius a Farenheit\n"<<endl;
+		cout<<"\t\t [Salir] cualquier otra tecla \n"<<endl;
 		cout<<"Opcion: ";
 		cin>>opt;
 		cout<<endl;
 		switch(opt){
-			case "a":
+			case 1:
 					float t;
 					cout<<"Ingrese Temp en grado Farenheit: ";
 					cin>>t;
@@ -33,12 +33,12 @@ void convertor(){
 					
 					
 			break;
-			case "b":
-					float t;
+			case 2:
+					float temp;
 					cout<<"Ingrese Temp en grado Celsius: ";
 					cin>>t;
 					cout<<endl;
-					toCelsi(t);
+					toCelsi(temp);
 			break;
 			default:
 				cout<<"Continuara al Menu principal..."<<endl;
@@ -52,4 +52,6 @@ void convertor(){
 }
 
 int main (){
+	convertor();
+	return 0;
 }
