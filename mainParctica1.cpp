@@ -58,12 +58,29 @@ void convertor(){
 void nota(){
 	string nom, matri, sec, materia, prof;
 	int as,tp,pp,ef;
-	
+	int numCamp[] = {as,tp,pp,ef}; 
+	string txtCamp[] = {nom,matri,sec,materia,prof};
+	string txtToPrint[] = {"Nombre de estudiante","Matricula de estudiante (se aceptan -)","Seccion","Materia","Nombre del Profesor"};
+	string intTxtToPrint[] = {'Asistencia',"Trabajo practico","Primer parcial","Examen final"};
 	cout<<"================================================================================"<<endl;
 	cout<<"====================== Calificaciones(La nota) =========================="<<endl;
 	cout<<"================================================================================"<<endl;
 	
-	cout<<"";
+	for(int i =0; i < sizeof(txtCamp)/ sizeof(*txtCamp); i++ ){
+		cout<<"Ingrese "<<txtToPrint[i]<<" : ";
+		cin>> txtCamp[i];
+		cout<<endl;
+		
+	};
+	
+	cout<<"Ingrese las calificaciones del estudiante:"<<endl;
+	for(int i = 0; i < sizeof(numCamp) / sizeof(*numCapm); i++ ){
+		cout<<"\t"<<intTxtToPrint[i]<<": ";
+		cin>>numCamp[i];
+		cout<<endl;
+	}
+	
+	
 	
 	
 	
