@@ -5,15 +5,17 @@
 using namespace std;
 
 //conversor temp
-float toFaren(float c){
-	return (c*(9/5))+32;
-}
 
-float toCelsi(float f){
-	return (f-32)*(5/9);
-}
 
 void convertor(){
+	float toFaren(float c){
+		return (c*(9/5))+32;
+	}
+
+	float toCelsi(float f){
+		return (f-32)*(5/9);
+	}
+	
 	int opt;
 	try{
 		cout<<"================================================================================"<<endl;
@@ -61,23 +63,35 @@ void nota(){
 	int* numCamp[] = {&as,&tp,&pp,&ef}; 
 	string* txtCamp[] = {&nom,&matri,&sec,&materia,&prof};
 	string txtToPrint[] = {"Nombre de estudiante","Matricula de estudiante (se aceptan -)","Seccion","Materia","Nombre del Profesor"};
-	string intTxtToPrint[] = {"Asistencia","Trabajo practico","Primer parcial","Examen final"};
+	string intTxtToPrint[] = {"Asistencia (0-10)","Trabajo practico(0-20)","Primer parcial(0-20)","Examen final(0-50)"};
 	cout<<"================================================================================"<<endl;
-	cout<<"====================== Calificaciones(La nota) =========================="<<endl;
+	cout<<"============================ Calificaciones(La nota) ==========================="<<endl;
 	cout<<"================================================================================"<<endl;
 	
 	for(int i =0; i < sizeof(txtCamp)/ sizeof(*txtCamp); i++ ){
 		cout<<"Ingrese "<<txtToPrint[i]<<" : ";
-		cin>> *txtCamp[i];
+		getline(cin, *txtCamp[i]);
 		cout<<endl;
 		
 	};
-	
+	/*as < 0 or as > 10
+	  tp < 0 or as > 20
+	  pp < 0 or as > 20
+	  ef < 0 or as > 50
+	*/
+	int limites[] = {10,20,20,50};
 	cout<<"Ingrese las calificaciones del estudiante:"<<endl;
 	for(int i = 0; i < sizeof(numCamp) / sizeof(*numCamp); i++ ){
-		cout<<"\t"<<intTxtToPrint[i]<<": ";
-		cin>> *numCamp[i];
-		cout<<endl;
+		while(true){
+			cout<<"\t"<<intTxtToPrint[i]<<": ";
+			cin>> *numCamp[i];
+			cout<<endl;
+			if(*numCamp[i] < 0 or *numCamp[i] > limites[i]){
+				cout<<"*El Valor no esta dentro del rango. Vuelva ingresarlo.*"<<endl;
+				continue;
+			};
+			break;
+		};
 	};
 	
 	int total = as+tp+pp+ef;
@@ -92,19 +106,25 @@ void nota(){
 	}else if(total <= 74 && total >= 70){
 		NT = 'D';
 	}else if(total <= 69 && total >= 60){
-		NT = 'FE';
+		NT = "FE";
 	}else if(total <= 59 && total >= 50){
-		NT = 'FI';
+		NT = "FI";
 	}else{
 		NT = 'F';
 	};
+	system("cls");
+	cout<<'\n'<<endl;
+	cout<<"============================ Calificaciones(La nota) ==========================="<<endl;
+	cout<<"*******************************************************************************"<<endl;
 	cout<<"Estudiante: "<<nom<<"\t"<<"Matricula: "<<matri<<"\n"<<endl;
 	cout<<endl;
-	cout<<"Seccion: "<<sec<<"\t"<<"Materia: "<<materia<<"\n"<<endl;
+	cout<<"Seccion: "<<sec<<"\t\t"<<"Materia: "<<materia<<"\n"<<endl;
 	cout<<endl;
-	cout<<"As\t"<<"Tp\t"<<"Pp\t"<<"Ef\t"<<"Sum F\t\t"<<"Nt"<<endl;
+	cout<<"\tAs\t"<<"Tp\t"<<"Pp\t"<<"Ef\t"<<"Sum F\t\t"<<"Nt"<<endl;
 	cout<<"\n"<<endl;
-	cout<<as<<"\t"<<tp<<"\t"<<pp<<"\t"<<ef<<"\t"<< total<<"\t\t"<<NT<<endl;
+	cout<<"\t"<<as<<"\t"<<tp<<"\t"<<pp<<"\t"<<ef<<"\t"<< total<<"\t\t"<<NT<<endl;
+	cout<<"*******************************************************************************"<<endl;
+	system("pause");
 };
 
 int main (){
