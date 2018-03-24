@@ -2,7 +2,17 @@
 Order=0
 Focused=0
 [Editor_0]
+<<<<<<< HEAD
 CursorCol=1
 CursorRow=1
 TopLine=43
+||||||| merged common ancestors
+CursorCol=17
+CursorRow=21
+TopLine=16
+=======
+CursorCol=18
+CursorRow=16
+TopLine=1
+>>>>>>> d3e1127be9eebf5c06059637a13eb9679db95329
 LeftChar=1
