@@ -5,9 +5,6 @@
 using namespace std;
 
 //conversor temp
-
-
-void convertor(){
 	float toFaren(float c){
 		return (c*(9/5))+32;
 	}
@@ -15,6 +12,8 @@ void convertor(){
 	float toCelsi(float f){
 		return (f-32)*(5/9);
 	}
+void convertor(){
+
 	
 	int opt;
 	try{
@@ -127,7 +126,119 @@ void nota(){
 	system("pause");
 };
 
+//casa de cambio
+void recibo(string moneda,string tc,string divisaFrom, string divisaTo,string cliente,string nac,float razonDecambio,int multiOrdiv){
+	long double cant,cn,ct;
+	float interes = 0.03;
+	
+	cout<<"Ingrese la cantidad de "<<moneda<<": ";
+	cin>>cant;
+	cout<<endl;
+	if(multiOrdiv == 0){
+		cn = cant*razonDecambio;
+	}else{
+		cn = cant/razonDecambio;
+	}
+	
+	ct = cn-(cn*interes);
+	cout<<"Cliente: "<<cliente<<"\tNacionalidad: "<<nac<<"\n"<<endl;
+	cout<<"*******************************************************************************"<<endl;
+	cout<<"\n"<<"Tipo de cambio\t"<<"Cantidad\t"<<endl;
+	cout<<tc<<"\t"<<cant<<" "<<divisaFrom<<"\n"<<endl;
+	cout<<"Cambio Neto\t"<<"Cambio Total(-3%)"<<endl;
+	cout<<cn<<divisaTo<<"\t"<<ct<<" "<<divisaTo<<"\n"<<endl;
+	cout<<"*******************************************************************************"<<endl;
+}
+
+void casaDecambio(){
+	
+	double usdToeur = 0.80929;
+	double usdToGbp = 0.70777;
+	double usdToDop = 49.536;	
+	double eurToDop = 61.20917;
+	double eurToGbp = 0.87455;
+	double GbpToDop = 69.989;
+	string cliente;
+	string nac;
+	
+	int opt;
+	cout<<"================================================================================"<<endl;
+	cout<<"=============================== Casa de cambio =================================="<<endl;
+	cout<<"================================================================================"<<endl;
+	
+	cout<<"Nombre: ";
+	getline(cin,cliente);
+	cout<<endl;
+	
+	cout<<"Nacionalidad: ";
+	getline(cin,nac);
+	cout<<endl;
+	
+	cout<<"Seleccione tipo de cambio:"<<endl;
+	cout<<"\t[1] Dolar a Peso"<<"\t[2] Dolar a Libra"<<"\t[3] Dolar a Euro\n"<<endl;
+	cout<<"\t[4] Euro a Dolar"<<"\t[5] Euro a Peso"<<"\t\t[6] Euro a Libra\n"<<endl;
+	cout<<"\t[7] Libra a Peso"<<"\t[8] Libra a Euro"<<"\t[9] Libra a Dolar\n"<<endl;
+	cout<<"\t[10] Peso a Dolar"<<"\t[11] Peso a Euro"<<"\t[12] Peso a Libra\n"<<endl;
+	cout<<"\t\t\t[Salir] cualquier otra tecla \n"<<endl;
+	cout<<"Opcion: ";
+	cin>>opt;
+	
+
+	switch(opt){
+		case 1:
+			recibo("dolares","Dolar - Peso","USD","DOP",cliente,nac,usdToDop,0);
+			 
+		break;
+		case 2:
+			recibo("dolares","Dolar - Libra","USD","GBP",cliente,nac,usdToGbp,0);
+			 
+		break;
+		case 3:
+			recibo("dolares","Dolar - Euro","USD","EUR",cliente,nac,usdToeur,0);
+			 
+		break;
+		case 4:
+			recibo("euros","Euro - Dolar","EUR","USD",cliente,nac,usdToeur,1);
+			 
+		break;
+		case 5:
+			recibo("euros","Euro - Peso","EUR","DOP",cliente,nac,eurToDop,0);
+			 
+		break;
+		case 6:
+			recibo("euros","Euro - Libra","EUR","GBP",cliente,nac,eurToGbp,0);
+		break;
+		case 7:
+			recibo("libras","Libra - Peso","GBP","DOP",cliente,nac,GbpToDop,1);
+			 
+		break;
+		case 8:
+			recibo("libras","Libra - Euro","GBP","EUR",cliente,nac,eurToGbp,1);
+			 
+		break;
+		case 9:
+			recibo("libras","Libra - Dolar","GBP","USD",cliente,nac,usdToGbp,1);
+			 
+		break;
+		case 10:
+			recibo("pesos","Peso - Euro","DOP","EUR",cliente,nac,eurToDop,0);
+			 
+		break;
+		case 11:
+			recibo("pesos","Peso - Dolar","DOP","USD",cliente,nac,usdToDop,0);
+			 
+		break;
+		case 12:
+			recibo("pesos","Peso - Libra","DOP","GBP",cliente,nac,GbpToDop,0);
+			 
+		break;
+		default:
+		break;
+	};
+	system("pause");
+	
+}
 int main (){
-	nota();
+	casaDecambio();
 	return 0;
 }
