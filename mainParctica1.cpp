@@ -132,7 +132,7 @@ void recibo(string moneda,string tc,string divisaFrom, string divisaTo,string cl
 	float interes = 0.03;
 	
 	cout<<"Ingrese la cantidad de "<<moneda<<": ";
-	cin>>cant;
+	cin>>cant; //validar cant sea numero
 	cout<<endl;
 	if(multiOrdiv == 0){
 		cn = cant*razonDecambio;
@@ -238,7 +238,62 @@ void casaDecambio(){
 	system("pause");
 	
 }
+
+//nominaDePago
+void nominaDePago(){
+	long double pagoxh,sueldoLaboral,sueldoExtra,sueldoBruto, afp, ars,sueldoTotal;
+	float horasTrabajadas, horasExtras, totalDehoras;
+	string empleado;
+	
+	cout<<"================================================================================"<<endl;
+	cout<<"================================= Nomina de Pago =============================="<<endl;
+	cout<<"================================================================================"<<endl;
+	
+	cout<<"Intoduzca Nombre: ";
+	getline(cin,empleado);
+	cout<<endl;
+	
+	cout<<"Cuanto gana por hora ($DOP): ";
+	cin>>pagoxh;
+	cout<<endl;
+	do{
+	
+		cout<<"Cantidad de horas laborables: ";
+		cin>>horasTrabajadas;
+		cout<<endl;
+		
+		cout<<"Cantidad de horas extra: ";
+		cin>>horasExtras;
+		cout<<endl;
+		
+		totalDehoras = horasTrabajadas +  horasExtras;
+		if(totalDehoras > 88){
+			cout<<"El total de horas laboradas exede el total que se puede laborar en una quincena.\n Por favor, se que ha trabajado mucho, pero vuelva a ingresar la horas que laboro."<<endl;
+		}
+	}while(totalDehoras > 88);
+	sueldoLaboral = horasTrabajadas * pagoxh;
+	sueldoExtra = horasExtras * (pagoxh + (pagoxh * 0.35));
+	sueldoBruto = sueldoLaboral + sueldoExtra;
+	ars = afp= sueldoBruto * 0.03;
+	sueldoTotal = (sueldoBruto - ars) -afp;
+	
+	
+	
+	cout<<"================================================================================"<<endl;
+	cout<<"=========================  Nomina de "<<empleado<<"  =============================="<<endl;
+	cout<<"=================================================================================\n\n"<<endl;
+	cout<<"Pago por hora: $"<<pagoxh<<" DOP\t\t"<<"Horas laboradas: "<<horasTrabajadas<<"\n"<<endl;
+	cout<<"Horas extra: "<<horasExtras<<"\t\t"<<"Total de horas laboradas: "<<totalDehoras<<endl;
+	cout<<"\n"<<endl;
+	cout<<"Sueldo Bruto: $"<<sueldoBruto<<" DOP\t\t"<<"Ars: $"<<ars<<" DOP"<<"\n"<<endl;
+	cout<<"Afp: $"<<afp<<"DOP \t\t"<<"Sueldo total: $"<<sueldoTotal<<" DOP"<<endl;
+	cout<<"\n\n"<<endl;
+	cout<<"==============================================================================="<<endl;
+	system("pause");
+}	
+
+
 int main (){
-	casaDecambio();
+	nominaDePago();
 	return 0;
 }
