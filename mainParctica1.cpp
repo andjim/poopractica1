@@ -311,6 +311,7 @@ void ConversorUnidades(){
 	cout<<"\t\t\t[Salir] cualquier otra tecla \n"<<endl;
 	cout<<"Opcion: ";
 	cin>>opt;
+	cout<<endl;
 	switch(opt){
 		case 1:
 			cout<<"Pies: ";
@@ -354,7 +355,44 @@ void ConversorUnidades(){
 	
 }
 
+//factorial
+
+long int fact(long int n){
+	if(n < 1) return 1;
+	return n*fact(n-1);
+}
+void factorialDelpositivo(){
+	long int num;
+	
+	
+	do{
+		system("cls");
+		cout<<"================================================================================"<<endl;
+		cout<<"============================= Factorial ================================="<<endl;
+		cout<<"================================================================================"<<endl;
+		cout<<"\nIngrese numero entero positivo: ";
+		cin>>num;
+		cout<<endl;
+		if(num < 1){
+			system("cls");
+			cout<<"El numero no es entero positivo o es cero. vuelva a introducirlo"<<endl;
+			system("pause");
+		}
+	}while(num < 1);
+	 
+	 if(num % 2 == 0){
+	 	cout<<"\nEl numero "<<num<<" es par."<<endl;
+	 }else{
+	 	cout<<"\nEl numero "<<num<<" es impar."<<endl;
+	 };
+	
+	cout<<"El Factorial del numero "<<num<<" es: "<<fact(num)<<endl;
+	system("pause");
+	 
+		
+}
+
 int main (){
-	ConversorUnidades();
+	factorialDelpositivo();
 	return 0;
 }
