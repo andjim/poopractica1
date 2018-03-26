@@ -292,8 +292,69 @@ void nominaDePago(){
 	system("pause");
 }	
 
+//Conversor de unidades
+void ConversorUnidades(){
+	double PiesToPulg = 12;
+	double mtsToCenti = 100;
+	double milTokilo = 1.609;
+	int opt;
+	double medida;
+	
+	cout<<"================================================================================"<<endl;
+	cout<<"============================= Cambio de Unidades ================================="<<endl;
+	cout<<"================================================================================"<<endl;
+	
+	cout<<"Seleccione tipo de cambio:"<<endl;
+	cout<<"\t[1] Pies a Pulgada"<<"\t\t[2] Pulgadas a Pies\n"<<endl;
+	cout<<"\t[3] Metros a Centimetros"<<"\t\t[4] Centimetros a Metros\n"<<endl;
+	cout<<"\t[5] Millas a Kilometros"<<"\t\t[6] Kilometros a Millas\n"<<endl;
+	cout<<"\t\t\t[Salir] cualquier otra tecla \n"<<endl;
+	cout<<"Opcion: ";
+	cin>>opt;
+	switch(opt){
+		case 1:
+			cout<<"Pies: ";
+			cin>>medida;
+			cout<<endl;
+			cout<<medida<<" pies son: "<<medida*PiesToPulg<<" pulgadas."<<endl;
+		break;
+		case 2:
+			cout<<"Pulgadas: ";
+			cin>>medida;
+			cout<<endl;
+			cout<<medida<<" pulgadas son: "<<medida/PiesToPulg<<" pies."<<endl;
+		break;
+		case 3:
+			cout<<"Metros: ";
+			cin>>medida;
+			cout<<endl;
+			cout<<medida<<" metros son: "<<medida*mtsToCenti<<" centimetros."<<endl;
+		break;
+		case 4:
+			cout<<"Centimetros: ";
+			cin>>medida;
+			cout<<endl;
+			cout<<medida<<" centimetros son: "<<medida/mtsToCenti<<" metros."<<endl;
+		break;
+		case 5:
+			cout<<"Millas: ";
+			cin>>medida;
+			cout<<endl;
+			cout<<medida<<" millas son: "<<medida*milTokilo<<" kilometros."<<endl;
+		break;
+		case 6:
+			cout<<"Kilometros: ";
+			cin>>medida;
+			cout<<endl;
+			cout<<medida<<" kilometros son: "<<medida/milTokilo<<" millas."<<endl;
+		break;											
+		default:;
+	}
+	system("pause");
+	
+}
 
 int main (){
-	nominaDePago();
+	ConversorUnidades();
 	return 0;
 }
