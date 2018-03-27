@@ -4,63 +4,45 @@
 #include <string>
 using namespace std;
 
-//conversor temp
-	float toFaren(float c){
-		return (c*(9/5))+32;
-	}
-
-	float toCelsi(float f){
-		return (f-32)*(5/9);
-	}
-void convertor(){
-
-	
-	int opt;
-	try{
-		cout<<"================================================================================"<<endl;
-		cout<<"====================== Conversor Farenheit - Celsius ==========================="<<endl;
-		cout<<"================================================================================"<<endl;
-		cout<<"\t\t [1] Celsius a Farenheit\n"<<endl;
-		cout<<"\t\t [2] Farenheit a Celsius\n"<<endl;
-		cout<<"\t\t [Salir] cualquier otra tecla \n"<<endl;
-		cout<<"Opcion: ";
-		cin>>opt;
-		cout<<endl;
-		switch(opt){
-			case 1:
-					float tempC;
-					cout<<"Ingrese Temp en grado Celsius: ";
-					cin>>tempC;
-					cout<<endl;
-					cout<<tempC<<" grados Celsius es igual a : "<<toFaren(tempC)<<" grados Farenheit."<<endl;
-
-					
-					
-			break;
-			case 2:
-					float tempF;
-					cout<<"Ingrese Temp en grado Farenheit: ";
-					cin>>tempF;
-					cout<<endl;
-					cout<<tempF<<" grados Farenheit es igual a : "<<toCelsi(tempF)<<" grados Celsius."<<endl;
-			break;
-			default:
-				cout<<"Continuara al Menu principal..."<<endl;
-				system("pause");
-
-		};
-	}
-	catch(int e){
-		cout<<e<<endl;
-	}
+//funciones de utilidad
+bool onlySpace(string line){
+	string espacio = " ";
+	for(int i = 0; i <line.size();i++) if(line[i] != espacio[0]) return false; return true;
+	/*
+		Recorre una cadena <line> en busqueda de caracteres diferentes a un espacio,
+		si lo encuentra, entontes devolvera falso, sino encuentra caracteres diferentes a un espacio
+		devolvera true;
+		
+		true, si la cadena tiene solo espacios
+		false, si es tiene aunque sea una letra;
+	*/
 }
+
+int letterCount(string line){
+	int count = 0;
+	string espacio = " ";
+	for(int i = 0; i <line.size();i++) if(line[i] != espacio[0]) count++;
+	return count;
+		/*
+		Recorre una cadena <line> en busqueda de caracteres diferentes a un espacio,
+		si lo encuentra, entontes incrementa la variable <count> en 1, y al terminar de recorrer
+		la variable devuelve el valor contenido en <cout>;
+	
+	*/
+}
+
 
 //la nota
 void nota(){
 	string nom, matri, sec, materia, prof;
+	string* Pnom = &nom;
+	string* Pmatri = &matri;
+	string* Psec = &sec;
+	string* Pmateria = &materia;
+	string* Pprof = &prof;
 	int as,tp,pp,ef;
 	int* numCamp[] = {&as,&tp,&pp,&ef}; 
-	string* txtCamp[] = {&nom,&matri,&sec,&materia,&prof};
+	string* txtCamp[] = {Pnom,Pmatri,Psec,Pmateria,Pprof};
 	string txtToPrint[] = {"Nombre de estudiante","Matricula de estudiante (se aceptan -)","Seccion","Materia","Nombre del Profesor"};
 	string intTxtToPrint[] = {"Asistencia (0-10)","Trabajo practico(0-20)","Primer parcial(0-20)","Examen final(0-50)"};
 	cout<<"================================================================================"<<endl;
@@ -68,9 +50,16 @@ void nota(){
 	cout<<"================================================================================"<<endl;
 	
 	for(int i =0; i < sizeof(txtCamp)/ sizeof(*txtCamp); i++ ){
-		cout<<"Ingrese "<<txtToPrint[i]<<" : ";
-		getline(cin, *txtCamp[i]);
-		cout<<endl;
+		string lin;
+		do{
+			
+			cout<<"Ingrese "<<txtToPrint[i]<<" : ";
+			getline(cin, *txtCamp[i]);
+			cout<<endl;
+			lin = *txtCamp[i];
+			
+			if(onlySpace(lin)) cout<<"Campo Obligatorio*\n"<<endl;
+		}while(onlySpace(lin));
 		
 	};
 	/*as < 0 or as > 10
@@ -85,9 +74,17 @@ void nota(){
 			cout<<"\t"<<intTxtToPrint[i]<<": ";
 			cin>> *numCamp[i];
 			cout<<endl;
-			if(*numCamp[i] < 0 or *numCamp[i] > limites[i]){
-				cout<<"*El Valor no esta dentro del rango. Vuelva ingresarlo.*"<<endl;
+			
+			if(cin.fail()){
+				cout<<"*Eso no fue un numero.*"<<endl;
+				cin.clear();
+				cin.ignore();
 				continue;
+			}else{
+				if(*numCamp[i] < 0 or *numCamp[i] > limites[i]){
+					cout<<"*El Valor no esta dentro del rango. Vuelva ingresarlo.*"<<endl;
+					continue;
+				};
 			};
 			break;
 		};
@@ -131,9 +128,22 @@ void recibo(string moneda,string tc,string divisaFrom, string divisaTo,string cl
 	long double cant,cn,ct;
 	float interes = 0.03;
 	
-	cout<<"Ingrese la cantidad de "<<moneda<<": ";
-	cin>>cant; //validar cant sea numero
-	cout<<endl;
+	while(true){
+		cout<<"Ingrese la cantidad de "<<moneda<<": ";
+		cin>>cant; //validar cant sea numero
+		cout<<endl;
+		cin.clear();
+		cin.ignore();
+		
+		if(cin.fail()){
+			system("cls");
+			cout<<"Eso no fue un numero. Vuelva ingresar"<<endl;
+			system("pause");
+			system("cls");
+			continue;
+		};
+		break;
+	}
 	if(multiOrdiv == 0){
 		cn = cant*razonDecambio;
 	}else{
@@ -166,22 +176,31 @@ void casaDecambio(){
 	cout<<"=============================== Casa de cambio =================================="<<endl;
 	cout<<"================================================================================"<<endl;
 	
-	cout<<"Nombre: ";
-	getline(cin,cliente);
-	cout<<endl;
+	do{
+		cout<<"Nombre: ";
+		getline(cin,cliente);
+		cout<<endl;
+		if(onlySpace(cliente)) cout<<"Campo obligatorio*"<<endl;
+	}while(onlySpace(cliente));
 	
-	cout<<"Nacionalidad: ";
-	getline(cin,nac);
-	cout<<endl;
+	do{
+		cout<<"Nacionalidad: ";
+		getline(cin,nac);
+		cout<<endl;
+		if(onlySpace(nac)) cout<<"Campo obligatorio*"<<endl;
+	}while(onlySpace(nac));
 	
-	cout<<"Seleccione tipo de cambio:"<<endl;
-	cout<<"\t[1] Dolar a Peso"<<"\t[2] Dolar a Libra"<<"\t[3] Dolar a Euro\n"<<endl;
-	cout<<"\t[4] Euro a Dolar"<<"\t[5] Euro a Peso"<<"\t\t[6] Euro a Libra\n"<<endl;
-	cout<<"\t[7] Libra a Peso"<<"\t[8] Libra a Euro"<<"\t[9] Libra a Dolar\n"<<endl;
-	cout<<"\t[10] Peso a Dolar"<<"\t[11] Peso a Euro"<<"\t[12] Peso a Libra\n"<<endl;
-	cout<<"\t\t\t[Salir] cualquier otra tecla \n"<<endl;
-	cout<<"Opcion: ";
-	cin>>opt;
+		cout<<"Seleccione tipo de cambio:"<<endl;
+		cout<<"\t[1] Dolar a Peso"<<"\t[2] Dolar a Libra"<<"\t[3] Dolar a Euro\n"<<endl;
+		cout<<"\t[4] Euro a Dolar"<<"\t[5] Euro a Peso"<<"\t\t[6] Euro a Libra\n"<<endl;
+		cout<<"\t[7] Libra a Peso"<<"\t[8] Libra a Euro"<<"\t[9] Libra a Dolar\n"<<endl;
+		cout<<"\t[10] Peso a Dolar"<<"\t[11] Peso a Euro"<<"\t[12] Peso a Libra\n"<<endl;
+		cout<<"\t\t\t[Salir] cualquier otra tecla \n"<<endl;
+		cout<<"Opcion: ";
+		cin>>opt;
+		cin.clear();
+		cin.ignore();
+		
 	
 
 	switch(opt){
@@ -249,28 +268,62 @@ void nominaDePago(){
 	cout<<"================================= Nomina de Pago =============================="<<endl;
 	cout<<"================================================================================"<<endl;
 	
-	cout<<"Intoduzca Nombre: ";
-	getline(cin,empleado);
-	cout<<endl;
-	
-	cout<<"Cuanto gana por hora ($DOP): ";
-	cin>>pagoxh;
-	cout<<endl;
 	do{
+		cout<<"Intoduzca Nombre: ";
+		getline(cin,empleado);
+		cout<<endl;
+		if(onlySpace(empleado)) cout<<"Campo obligatorio*"<<endl;
+	}while(onlySpace(empleado));
+
+	do{
+		cout<<"Cuanto gana por hora ($DOP): ";
+		cin>>pagoxh;
+		cout<<endl;
+		cin.clear();
+		cin.ignore();
+		if(cin.fail()){
+			system("cls");
+			cout<<"El valor no fue numerico."<<endl;
+			system("pause");
+			system("cls");
+		}
+	}while(cin.fail());
 	
-		cout<<"Cantidad de horas laborables: ";
-		cin>>horasTrabajadas;
-		cout<<endl;
+	do{
+		do{
+			cout<<"Cantidad de horas laborables: ";
+			cin>>horasTrabajadas;
+			cout<<endl;
+			cin.clear();
+			cin.ignore();
+			if(cin.fail()){
+				system("cls");
+				cout<<"El valor no fue numerico."<<endl;
+				system("pause");
+				system("cls");
+			};
+		}while(cin.fail());
 		
-		cout<<"Cantidad de horas extra: ";
-		cin>>horasExtras;
-		cout<<endl;
+		do{
+			cout<<"Cantidad de horas extra: ";
+			cin>>horasExtras;
+			cout<<endl;
+			cin.clear();
+			cin.ignore();
+			if(cin.fail()){
+				system("cls");
+				cout<<"El valor no fue numerico."<<endl;
+				system("pause");
+				system("cls");
+			};
+		}while(cin.fail());
 		
 		totalDehoras = horasTrabajadas +  horasExtras;
 		if(totalDehoras > 88){
 			cout<<"El total de horas laboradas exede el total que se puede laborar en una quincena.\n Por favor, se que ha trabajado mucho, pero vuelva a ingresar la horas que laboro."<<endl;
-		}
-	}while(totalDehoras > 88);
+		};
+		}while(totalDehoras > 88);
+		
 	sueldoLaboral = horasTrabajadas * pagoxh;
 	sueldoExtra = horasExtras * (pagoxh + (pagoxh * 0.35));
 	sueldoBruto = sueldoLaboral + sueldoExtra;
@@ -312,48 +365,122 @@ void ConversorUnidades(){
 	cout<<"Opcion: ";
 	cin>>opt;
 	cout<<endl;
+	cin.clear();
+	cin.ignore();
 	switch(opt){
 		case 1:
-			cout<<"Pies: ";
-			cin>>medida;
-			cout<<endl;
+			do{
+				cout<<"Pies: ";
+				cin>>medida;
+				cout<<endl;
+				cin.clear();
+				cin.ignore();
+				if(cin.fail()){
+					system("cls");
+					cout<<"El valor no fue numerico."<<endl;
+					system("pause");
+					system("cls");
+					continue;
+				};
+				break;
+			}while(cin.fail());
 			cout<<medida<<" pies son: "<<medida*PiesToPulg<<" pulgadas."<<endl;
 		break;
 		case 2:
-			cout<<"Pulgadas: ";
-			cin>>medida;
-			cout<<endl;
+			do{
+				cout<<"Pulgadas: ";
+				cin>>medida;
+				cout<<endl;
+				cin.clear();
+				cin.ignore();
+				if(cin.fail()){
+					system("cls");
+					cout<<"El valor no fue numerico."<<endl;
+					system("pause");
+					system("cls");
+					continue;
+				};
+				break;
+			}while(cin.fail());
 			cout<<medida<<" pulgadas son: "<<medida/PiesToPulg<<" pies."<<endl;
 		break;
 		case 3:
-			cout<<"Metros: ";
-			cin>>medida;
-			cout<<endl;
+			do{
+				cout<<"Metros: ";
+				cin>>medida;
+				cout<<endl;
+				cin.clear();
+				cin.ignore();
+				if(cin.fail()){
+					system("cls");
+					cout<<"El valor no fue numerico."<<endl;
+					system("pause");
+					system("cls");
+					continue;
+				};
+				break;
+			}while(cin.fail());
 			cout<<medida<<" metros son: "<<medida*mtsToCenti<<" centimetros."<<endl;
 		break;
 		case 4:
-			cout<<"Centimetros: ";
-			cin>>medida;
-			cout<<endl;
+			do{
+				cout<<"Centimetros: ";
+				cin>>medida;
+				cout<<endl;
+				cin.clear();
+				cin.ignore();
+				if(cin.fail()){
+					system("cls");
+					cout<<"El valor no fue numerico."<<endl;
+					system("pause");
+					system("cls");
+					continue;
+				};
+				break;
+			}while(cin.fail());
+			
 			cout<<medida<<" centimetros son: "<<medida/mtsToCenti<<" metros."<<endl;
 		break;
 		case 5:
-			cout<<"Millas: ";
-			cin>>medida;
-			cout<<endl;
+			do{
+				cout<<"Millas: ";
+				cin>>medida;
+				cout<<endl;
+				cin.clear();
+				cin.ignore();
+				if(cin.fail()){
+					system("cls");
+					cout<<"El valor no fue numerico."<<endl;
+					system("pause");
+					system("cls");
+					continue;
+				};
+				break;
+			}while(cin.fail());
 			cout<<medida<<" millas son: "<<medida*milTokilo<<" kilometros."<<endl;
 		break;
 		case 6:
-			cout<<"Kilometros: ";
-			cin>>medida;
-			cout<<endl;
+			do{
+				cout<<"Kilometros: ";
+				cin>>medida;
+				cout<<endl;
+				cin.clear();
+				cin.ignore();
+				if(cin.fail()){
+					system("cls");
+					cout<<"El valor no fue numerico."<<endl;
+					system("pause");
+					system("cls");
+					continue;
+				};
+				break;
+			}while(cin.fail());;
 			cout<<medida<<" kilometros son: "<<medida/milTokilo<<" millas."<<endl;
 		break;											
-		default:;
+		default:break;
 	}
 	system("pause");
-	
-}
+};
 
 //factorial
 
@@ -367,12 +494,25 @@ void factorialDelpositivo(){
 	
 	do{
 		system("cls");
-		cout<<"================================================================================"<<endl;
-		cout<<"============================= Factorial ================================="<<endl;
-		cout<<"================================================================================"<<endl;
-		cout<<"\nIngrese numero entero positivo: ";
-		cin>>num;
-		cout<<endl;
+		do{
+			cout<<"================================================================================"<<endl;
+			cout<<"============================= Factorial ================================="<<endl;
+			cout<<"================================================================================"<<endl;
+			cout<<"\nIngrese numero entero positivo: ";
+			cin>>num;
+			cout<<endl;
+			cin.clear();
+			cin.ignore();
+			if(cin.fail()){
+				system("cls");
+				cout<<"El valor no fue numerico."<<endl;
+				system("pause");
+				system("cls");
+				continue;
+			};
+			break;
+		}while(cin.fail());
+		
 		if(num < 1){
 			system("cls");
 			cout<<"El numero no es entero positivo o es cero. vuelva a introducirlo"<<endl;
@@ -392,7 +532,134 @@ void factorialDelpositivo(){
 		
 }
 
+//conversor temp
+float toFaren(float c){
+	return ((c*1.8)+32);
+}
+float toCelsi(float f){
+	return ((f-32)*0.555555556);
+}
+void convertor(){
+
+	
+	int opt;
+	try{
+		cout<<"================================================================================"<<endl;
+		cout<<"====================== Conversor Farenheit - Celsius ==========================="<<endl;
+		cout<<"================================================================================"<<endl;
+		cout<<"\t\t [1] Celsius a Farenheit\n"<<endl;
+		cout<<"\t\t [2] Farenheit a Celsius\n"<<endl;
+		cout<<"\t\t [Salir] cualquier otra tecla \n"<<endl;
+		cout<<"Opcion: ";
+		cin>>opt;
+		cout<<endl;
+		cin.clear();
+		cin.ignore();
+		switch(opt){
+			case 1:
+					float tempC;
+					do{
+						cout<<"Ingrese Temp en grado Celsius: ";
+						cin>>tempC;
+						cout<<endl;
+						cin.clear();
+						cin.ignore();
+						if(cin.fail()){
+							system("cls");
+							cout<<"El valor no fue numerico."<<endl;
+							system("pause");
+							system("cls");
+							continue;
+						};
+						break;
+					}while(cin.fail());
+					cout<<tempC<<" grados Celsius es igual a : "<<toFaren(tempC)<<" grados Farenheit."<<endl;
+			break;
+			case 2:
+					float tempF;
+					do{
+						cout<<"Ingrese Temp en grado Farenheit: ";
+						cin>>tempF;
+						cout<<endl;
+						cin.clear();
+						cin.ignore();
+						if(cin.fail()){
+							system("cls");
+							cout<<"El valor no fue numerico."<<endl;
+							system("pause");
+							system("cls");
+							continue;
+						};
+						break;
+					}while(cin.fail());
+					cout<<tempF<<" grados Farenheit es igual a : "<<toCelsi(tempF)<<" grados Celsius."<<endl;
+			break;
+			default:
+				cout<<"Continuara al Menu principal..."<<endl;
+				system("pause");
+
+		};
+		system("pause");
+	}
+	catch(int e){
+		cout<<e<<endl;
+	}
+}
+
+//MAIN
 int main (){
-	factorialDelpositivo();
+	int opt;
+	bool flag = 1;
+	while(flag){
+		cout<<"================================================================================"<<endl;
+		cout<<"================== Bienvenido Profesor Ramon Jimenez ==========================="<<endl;
+		cout<<"================================================================================"<<endl;
+		cout<<"Este Programa contiene todas funcionalidades pedidas en practica.\n"<<endl;
+		cout<<"El siguinte fue hecho por los Estudiantes de las seccion 0407:\n"<<endl;
+		cout<<"\t\t*Anderson Jimenez Santana  17-EIST-1-118\n\n\t\t*Alvaro Michell Castro 17-EIST-1-072\n\n\t\t*Jean Garcia Rodriguez 17-EISN-1-124\n"<<endl;
+		
+		cout<<"Seleccione la funcion:"<<endl;
+		cout<<"\t[1] Impresion de Nota"<<"\t\t[2] Casa de cambio\n"<<endl;
+		cout<<"\t[3] Nomina de pago"<<"\t\t[4] Conversor de unidades\n"<<endl;
+		cout<<"\t[5] Factorial de entero positivo"<<"\t[6] Conversor de temperatura\n"<<endl;
+		cout<<"\t\t\t[Salir] cualquier otra tecla \n"<<endl;
+		cout<<"Opcion: ";
+		cin>>opt;
+		cout<<endl;
+		cin.clear();
+		cin.ignore();
+		
+		switch(opt){
+			case 1:
+				nota();
+			break;
+			case 2:
+				casaDecambio();
+			break;
+			case 3:
+				nominaDePago();
+			break;
+			case 4:
+				ConversorUnidades();
+			break;
+			case 5:
+				factorialDelpositivo();
+			break;
+			case 6:
+				convertor();
+			break;											
+			default:
+				flag = cin.fail();
+				if(opt < 1 or opt > 6){
+					flag = 0;
+				};	
+		};
+	};
+	system("cls");
+	cout<<"Gracias por usar el programa."<<endl;
+	cout<<"Este Programa contiene todas funcionalidades pedidas en practica.\n"<<endl;
+	cout<<"El siguinte fue hecho por los Estudiantes de las seccion 0407:"<<endl;
+	cout<<"\t\t*Anderson Jimenez Santana  17-EIST-1-118\n\n\t\t*Alvaro Michell Castro 17-EIST-1-072\n\n\t\t*Jean Garcia Rodriguez 17-EISN-1-124"<<endl;
+	system("pause");
 	return 0;
 }
