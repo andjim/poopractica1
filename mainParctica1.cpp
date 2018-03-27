@@ -1,3 +1,13 @@
+/*MATERIA: PROGRAMCION ORIENTADA A OBJETOS;
+  PROFESOR: RAMON JIMENEZ;
+	Este programa fue hecho por los estudiante de la seccion 0407:
+				*Anderson Jimenez Santana 17-EIST-1-118;
+				*Alvaro Michell Castro 17-EIST-1-072;
+				*Jean Garcia Rodriguez 17-EISN-1-124;
+*/
+
+
+
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
@@ -34,16 +44,24 @@ int letterCount(string line){
 
 //la nota
 void nota(){
-	string nom, matri, sec, materia, prof;
-	string* Pnom = &nom;
+	/*
+		Esta funcion muestra la calificacion de los estudiantes y nota con la que pasan la materia;
+		esta pide datos como nombre, seccion, matricula, materia y profesor; mas las puntuaciones 
+		pertinentes a asistencia, trabajo practico, primer parcial y examen final.
+	
+	*/
+	string nom, matri, sec, materia, prof;//inicializando la variables de texto;
+	string* Pnom = &nom;//se crean los punteros de las variables de texto para luego almacenarlas
 	string* Pmatri = &matri;
 	string* Psec = &sec;
 	string* Pmateria = &materia;
-	string* Pprof = &prof;
-	int as,tp,pp,ef;
-	int* numCamp[] = {&as,&tp,&pp,&ef}; 
-	string* txtCamp[] = {Pnom,Pmatri,Psec,Pmateria,Pprof};
+	string* Pprof = &prof;//hasta aqui los punteros de txt;
+	int as,tp,pp,ef; //declarando variables numericas donde se guardaran las calificaciones;
+	int* numCamp[] = {&as,&tp,&pp,&ef}; //se almacena los punteros de las var numericas en un array;
+	string* txtCamp[] = {Pnom,Pmatri,Psec,Pmateria,Pprof};//se almacena los punteros de las var numericas en un array
+	//este array de strings contiene la cadenas que seran mostradas en el <cout> al pedir los diferentes datos de txt;
 	string txtToPrint[] = {"Nombre de estudiante","Matricula de estudiante (se aceptan -)","Seccion","Materia","Nombre del Profesor"};
+	//en este se hace lo mismo que en el anterior pero para las numericas;
 	string intTxtToPrint[] = {"Asistencia (0-10)","Trabajo practico(0-20)","Primer parcial(0-20)","Examen final(0-50)"};
 	cout<<"================================================================================"<<endl;
 	cout<<"============================ Calificaciones(La nota) ==========================="<<endl;
@@ -54,60 +72,73 @@ void nota(){
 		do{
 			
 			cout<<"Ingrese "<<txtToPrint[i]<<" : ";
-			getline(cin, *txtCamp[i]);
+			getline(cin, *txtCamp[i]);//se ingresa el dato pedido y se almacena en la dirrecion de memoria correspondiente;
 			cout<<endl;
-			lin = *txtCamp[i];
+			lin = *txtCamp[i]; // <lin> se le da el valor que se acaba de introducir para poder validarlo en la funcion <onlySpace>
 			
 			if(onlySpace(lin)) cout<<"Campo Obligatorio*\n"<<endl;
+			/*
+				en el while se valida que los campos no sean llenados con espacios
+				utilizando la funcion <onlySpace>;
+			*/			
 		}while(onlySpace(lin));
-		
+		/*
+			el <for> tiene por limite la cantidad de elementos en el array <txtCamp>
+			al hacer la opercaion de dividir el tamaño(bytes) del array entre el tamano asignado
+			a su tipo de dato <string> que es 8; 
+		*/
 	};
 	/*as < 0 or as > 10
 	  tp < 0 or as > 20
 	  pp < 0 or as > 20
 	  ef < 0 or as > 50
 	*/
-	int limites[] = {10,20,20,50};
+	int limites[] = {10,20,20,50};// estos son lo maximos de los valores numericos se les puede asignar;
 	cout<<"Ingrese las calificaciones del estudiante:"<<endl;
 	for(int i = 0; i < sizeof(numCamp) / sizeof(*numCamp); i++ ){
-		while(true){
+		while(true){//se inicia un bucle infinito, que solo puede ser detenido con la sentencia <break>;
 			cout<<"\t"<<intTxtToPrint[i]<<": ";
-			cin>> *numCamp[i];
+			cin>> *numCamp[i];//se asigna el valor en la dirrecion que el aputador corresponde;
 			cout<<endl;
 			
-			if(cin.fail()){
-				cout<<"*Eso no fue un numero.*"<<endl;
-				cin.clear();
-				cin.ignore();
-				continue;
+			if(cin.fail()){//si el valor introducido no corresponde con el tipo de variable, <cin.fail> retorna true que indica que fallo la entrada de datos;
+				cout<<"*Eso no fue un numero entero.*"<<endl;
+				cin.clear();//limpia el espacio en memoria <buffer> asignado a la entrada de datos;
+				cin.ignore();//arregla el stream de datos;
+				continue;//pasa a la sigte iteracion, ignorando el codigo de abajo;
 			}else{
-				if(*numCamp[i] < 0 or *numCamp[i] > limites[i]){
+				if(*numCamp[i] < 0 or *numCamp[i] > limites[i]){//aqui se valida que el valor numerico este en el rango que corresponda ej: asistencia de 0 a 10;
 					cout<<"*El Valor no esta dentro del rango. Vuelva ingresarlo.*"<<endl;
-					continue;
+					continue;//pasa a la sigte iteracion, ignorando el break que terminara el bucle while;
 				};
 			};
-			break;
+			break;//solo se ejecutara si el dato entrado pasa la validaciones anteriores
 		};
+		/*
+			este <for> hace el mismo proceso que el de los valores numnericos
+		*/
 	};
 	
-	int total = as+tp+pp+ef;
-	string NT;
+	int total = as+tp+pp+ef;//se hace una sumatoria de las calificaciones
+	string NT;//nota en letra;
 	
-	if(total>=90){
+	if(total>=90){//de 90 en adelante una A
 		NT = 'A';
-	}else if(total <= 89 && total >=80){
+	}else if(total <= 89 && total >=80){ //entre 89 - 80 B
 		NT = 'B';
-	}else if(total <=79 && total >= 75){
+	}else if(total <=79 && total >= 75){//entre 79 - 75 C
 		NT = 'C';
-	}else if(total <= 74 && total >= 70){
+	}else if(total <= 74 && total >= 70){//entre 74 - 70 D
 		NT = 'D';
-	}else if(total <= 69 && total >= 60){
+	}else if(total <= 69 && total >= 60){//entre 69 - 60 FE
 		NT = "FE";
-	}else if(total <= 59 && total >= 50){
+	}else if(total <= 59 && total >= 50){//entre 59 - 50 FI
 		NT = "FI";
-	}else{
-		NT = 'F';
+	}else{//menor a 50 F
+		NT = 'F'; 
 	};
+	
+	//Se limpia la pantalla y se imprimen los datos obtenidos previamente;
 	system("cls");
 	cout<<'\n'<<endl;
 	cout<<"============================ Calificaciones(La nota) ==========================="<<endl;
@@ -125,17 +156,28 @@ void nota(){
 
 //casa de cambio
 void recibo(string moneda,string tc,string divisaFrom, string divisaTo,string cliente,string nac,float razonDecambio,int multiOrdiv){
-	long double cant,cn,ct;
-	float interes = 0.03;
+	/*
+		<moneda> nombre de la divisa a cambiar;
+		<tc> tipo de cambio, si es de Dolar a Peso, cualquier otra opcion;
+		<divisaFrom> codigo monetario de la divisa a cambiar ej: Dollar -> USD;
+		<divisaTo> codigo monetario de la divisa que sera devuelta ej: Peso domincano -> DOP;
+		<cliente> nombre del cliente;
+		<nac> nacionalidad del cliente;
+		<razonDecambio> razon con la cual una divisa incrementa en razon del incremento de la otra;
+		<multiOrdiv> valor numerico que indica si para pasar de una moneda a otra es multiplicar o dividir;
+	*/
+	
+	long double cant,cn,ct;//almacenaran cantidad a camniar, cambio neto y cambio total, correspondientemente;
+	float interes = 0.03;// interes a cobrar 3%;
 	
 	while(true){
 		cout<<"Ingrese la cantidad de "<<moneda<<": ";
-		cin>>cant; //validar cant sea numero
+		cin>>cant; //cantidad a cambiar
 		cout<<endl;
 		cin.clear();
 		cin.ignore();
 		
-		if(cin.fail()){
+		if(cin.fail()){//este proceso es el mismo que vimos en la nota para validar los datos numericos;
 			system("cls");
 			cout<<"Eso no fue un numero. Vuelva ingresar"<<endl;
 			system("pause");
@@ -144,13 +186,14 @@ void recibo(string moneda,string tc,string divisaFrom, string divisaTo,string cl
 		};
 		break;
 	}
-	if(multiOrdiv == 0){
+	if(multiOrdiv == 0){//si <multiOrdiv> es igual a 0 se multiplica, de lo contrario se divide;
 		cn = cant*razonDecambio;
 	}else{
 		cn = cant/razonDecambio;
 	}
 	
-	ct = cn-(cn*interes);
+	ct = cn-(cn*interes);// se le resta el 3% a la cantidad cambiada;
+	//se imprime el recibo
 	cout<<"Cliente: "<<cliente<<"\tNacionalidad: "<<nac<<"\n"<<endl;
 	cout<<"*******************************************************************************"<<endl;
 	cout<<"\n"<<"Tipo de cambio\t"<<"Cantidad\t"<<endl;
@@ -162,16 +205,16 @@ void recibo(string moneda,string tc,string divisaFrom, string divisaTo,string cl
 
 void casaDecambio(){
 	
-	double usdToeur = 0.80929;
-	double usdToGbp = 0.70777;
-	double usdToDop = 49.536;	
-	double eurToDop = 61.20917;
-	double eurToGbp = 0.87455;
-	double GbpToDop = 69.989;
-	string cliente;
-	string nac;
+	double usdToeur = 0.80929;//razon de cambio del dolar respecto al euro;
+	double usdToGbp = 0.70777;//razon de cambio del dolar respecto a la libra esterlina;
+	double usdToDop = 49.536; //razon de cambio del dolar respecto al peso dom;	
+	double eurToDop = 61.20917;//razon de cambio del euro respecto al peso dom;
+	double eurToGbp = 0.87455;//razon de cambio del euro respecto a la libra esterlina;
+	double GbpToDop = 69.989;//razon de cambio de la libra esterlina respecto al peso;
+	string cliente;// nombre del cliente;
+	string nac;// nacionalidad del cliente;
 	
-	int opt;
+	int opt;// se almacena la opcion elegida;
 	cout<<"================================================================================"<<endl;
 	cout<<"=============================== Casa de cambio =================================="<<endl;
 	cout<<"================================================================================"<<endl;
@@ -181,14 +224,14 @@ void casaDecambio(){
 		getline(cin,cliente);
 		cout<<endl;
 		if(onlySpace(cliente)) cout<<"Campo obligatorio*"<<endl;
-	}while(onlySpace(cliente));
+	}while(onlySpace(cliente));//se valida que el campo no sea llenado con espacios;
 	
 	do{
 		cout<<"Nacionalidad: ";
 		getline(cin,nac);
 		cout<<endl;
 		if(onlySpace(nac)) cout<<"Campo obligatorio*"<<endl;
-	}while(onlySpace(nac));
+	}while(onlySpace(nac));//se valida que el campo no sea llenado con espacios;
 	
 		cout<<"Seleccione tipo de cambio:"<<endl;
 		cout<<"\t[1] Dolar a Peso"<<"\t[2] Dolar a Libra"<<"\t[3] Dolar a Euro\n"<<endl;
@@ -198,40 +241,40 @@ void casaDecambio(){
 		cout<<"\t\t\t[Salir] cualquier otra tecla \n"<<endl;
 		cout<<"Opcion: ";
 		cin>>opt;
-		cin.clear();
-		cin.ignore();
+		cin.clear();//se limpia el buffer
+		cin.ignore();//se repara la entrada de datos en caso de que el dato no sea numerico;
 		
 	
 
 	switch(opt){
-		case 1:
+		case 1://Dolar-Peso
 			recibo("dolares","Dolar - Peso","USD","DOP",cliente,nac,usdToDop,0);
 			 
 		break;
-		case 2:
+		case 2://Dolar-Libra
 			recibo("dolares","Dolar - Libra","USD","GBP",cliente,nac,usdToGbp,0);
 			 
 		break;
-		case 3:
+		case 3://Dolar-euro
 			recibo("dolares","Dolar - Euro","USD","EUR",cliente,nac,usdToeur,0);
 			 
 		break;
-		case 4:
+		case 4://Euro - Dolar
 			recibo("euros","Euro - Dolar","EUR","USD",cliente,nac,usdToeur,1);
 			 
 		break;
-		case 5:
+		case 5://Euro - Peso
 			recibo("euros","Euro - Peso","EUR","DOP",cliente,nac,eurToDop,0);
 			 
 		break;
-		case 6:
+		case 6://Euro - Libra
 			recibo("euros","Euro - Libra","EUR","GBP",cliente,nac,eurToGbp,0);
 		break;
-		case 7:
+		case 7://Libra - Peso
 			recibo("libras","Libra - Peso","GBP","DOP",cliente,nac,GbpToDop,1);
 			 
 		break;
-		case 8:
+		case 8://Libra - Euro
 			recibo("libras","Libra - Euro","GBP","EUR",cliente,nac,eurToGbp,1);
 			 
 		break;
@@ -239,19 +282,19 @@ void casaDecambio(){
 			recibo("libras","Libra - Dolar","GBP","USD",cliente,nac,usdToGbp,1);
 			 
 		break;
-		case 10:
+		case 10://Peso - Euro
 			recibo("pesos","Peso - Euro","DOP","EUR",cliente,nac,eurToDop,0);
 			 
 		break;
-		case 11:
+		case 11://Peso - Dolar
 			recibo("pesos","Peso - Dolar","DOP","USD",cliente,nac,usdToDop,0);
 			 
 		break;
-		case 12:
+		case 12://Peso - Libra
 			recibo("pesos","Peso - Libra","DOP","GBP",cliente,nac,GbpToDop,0);
 			 
 		break;
-		default:
+		default://cualquier valor que no corresponda con los del rango [1,12] terminara la ejecuccion de la funcion de cambio; 
 		break;
 	};
 	system("pause");
@@ -260,9 +303,21 @@ void casaDecambio(){
 
 //nominaDePago
 void nominaDePago(){
+	/*
+		<pagoxh> almacena lo que se gana por hora;
+		<horasTrabajadas> almacena las horas de trabajo normales;
+		<horasExtras> almacena la s horas de trabajo extra;
+		<totalDehoras> es la suma de las todas la horas trabajadas y extra;
+		<sueldoLaboral> almacena lo que se gana al multiplicar <horasTrabajas> * <pagoxh>;
+		<sueldoExtra> almacena lo que se gana al multiplicar <horasExtras> * <pagoxh + 35%>; 
+		<sueldoBruto> almacena la sumatoria del <sueldoLaboral> + <sueldoExtra>;
+		<afp> almacena lo que se saca del <sueldoBruto> para fondo de pension; 3%
+		<ars> almacena lo que se sca del <sueldoBruto> para salud; 3%
+		<sueldoTotal> almacena lo que resta del <sueldoBruto> al sacarle <afp> y <ars>;
+	*/
 	long double pagoxh,sueldoLaboral,sueldoExtra,sueldoBruto, afp, ars,sueldoTotal;
 	float horasTrabajadas, horasExtras, totalDehoras;
-	string empleado;
+	string empleado;// nombre del empleado
 	
 	cout<<"================================================================================"<<endl;
 	cout<<"================================= Nomina de Pago =============================="<<endl;
@@ -273,7 +328,7 @@ void nominaDePago(){
 		getline(cin,empleado);
 		cout<<endl;
 		if(onlySpace(empleado)) cout<<"Campo obligatorio*"<<endl;
-	}while(onlySpace(empleado));
+	}while(onlySpace(empleado));//validacion de txt;
 
 	do{
 		cout<<"Cuanto gana por hora ($DOP): ";
@@ -287,7 +342,7 @@ void nominaDePago(){
 			system("pause");
 			system("cls");
 		}
-	}while(cin.fail());
+	}while(cin.fail());////validacion de campo numerico;
 	
 	do{
 		do{
@@ -302,7 +357,7 @@ void nominaDePago(){
 				system("pause");
 				system("cls");
 			};
-		}while(cin.fail());
+		}while(cin.fail());//validacion de campo numerico;
 		
 		do{
 			cout<<"Cantidad de horas extra: ";
@@ -316,10 +371,10 @@ void nominaDePago(){
 				system("pause");
 				system("cls");
 			};
-		}while(cin.fail());
+		}while(cin.fail());//validacion de campo numerico;
 		
 		totalDehoras = horasTrabajadas +  horasExtras;
-		if(totalDehoras > 88){
+		if(totalDehoras > 88){ //si el total de horas trabajadas es mayor a 88, que es la cantidad maxima laborable en una quincena debe introducir las horas de nuevo;
 			cout<<"El total de horas laboradas exede el total que se puede laborar en una quincena.\n Por favor, se que ha trabajado mucho, pero vuelva a ingresar la horas que laboro."<<endl;
 		};
 		}while(totalDehoras > 88);
@@ -331,7 +386,7 @@ void nominaDePago(){
 	sueldoTotal = (sueldoBruto - ars) -afp;
 	
 	
-	
+	//muestra en pantalla la nomina;
 	cout<<"================================================================================"<<endl;
 	cout<<"=========================  Nomina de "<<empleado<<"  =============================="<<endl;
 	cout<<"=================================================================================\n\n"<<endl;
@@ -347,11 +402,11 @@ void nominaDePago(){
 
 //Conversor de unidades
 void ConversorUnidades(){
-	double PiesToPulg = 12;
-	double mtsToCenti = 100;
-	double milTokilo = 1.609;
-	int opt;
-	double medida;
+	double PiesToPulg = 12;//cantidad de pulgadas en un pie;
+	double mtsToCenti = 100;//cantidad de centimetros en un metro;
+	double milTokilo = 1.609;//cantidad de kilometros en una milla;
+	int opt;//opcion;
+	double medida;//valor de la medida a cambiar;
 	
 	cout<<"================================================================================"<<endl;
 	cout<<"============================= Cambio de Unidades ================================="<<endl;
@@ -383,7 +438,7 @@ void ConversorUnidades(){
 					continue;
 				};
 				break;
-			}while(cin.fail());
+			}while(cin.fail());//se valora que el input sea numerico.
 			cout<<medida<<" pies son: "<<medida*PiesToPulg<<" pulgadas."<<endl;
 		break;
 		case 2:
@@ -401,7 +456,7 @@ void ConversorUnidades(){
 					continue;
 				};
 				break;
-			}while(cin.fail());
+			}while(cin.fail());//se valora que el input sea numerico.
 			cout<<medida<<" pulgadas son: "<<medida/PiesToPulg<<" pies."<<endl;
 		break;
 		case 3:
@@ -419,7 +474,7 @@ void ConversorUnidades(){
 					continue;
 				};
 				break;
-			}while(cin.fail());
+			}while(cin.fail());//se valora que el input sea numerico.
 			cout<<medida<<" metros son: "<<medida*mtsToCenti<<" centimetros."<<endl;
 		break;
 		case 4:
@@ -437,7 +492,7 @@ void ConversorUnidades(){
 					continue;
 				};
 				break;
-			}while(cin.fail());
+			}while(cin.fail());//se valora que el input sea numerico.
 			
 			cout<<medida<<" centimetros son: "<<medida/mtsToCenti<<" metros."<<endl;
 		break;
@@ -456,7 +511,7 @@ void ConversorUnidades(){
 					continue;
 				};
 				break;
-			}while(cin.fail());
+			}while(cin.fail());//se valora que el input sea numerico.
 			cout<<medida<<" millas son: "<<medida*milTokilo<<" kilometros."<<endl;
 		break;
 		case 6:
@@ -474,22 +529,22 @@ void ConversorUnidades(){
 					continue;
 				};
 				break;
-			}while(cin.fail());;
+			}while(cin.fail());;//se valora que el input sea numerico.
 			cout<<medida<<" kilometros son: "<<medida/milTokilo<<" millas."<<endl;
 		break;											
 		default:break;
-	}
+	}//si l aopcion no esta en el rango [1,6] termina la ejeccion de la funcion;
 	system("pause");
 };
 
 //factorial
 
-long int fact(long int n){
+long int fact(long int n){//funcion recursiva que devuelve el factorial de un numero;
 	if(n < 1) return 1;
 	return n*fact(n-1);
 }
 void factorialDelpositivo(){
-	long int num;
+	long int num;//almacena numero a procesar;
 	
 	
 	do{
@@ -511,99 +566,95 @@ void factorialDelpositivo(){
 				continue;
 			};
 			break;
-		}while(cin.fail());
+		}while(cin.fail());//valida que se haya ingresado un numero entero;
 		
-		if(num < 1){
+		if(num < 1){//valida que el numero sea positivo
 			system("cls");
 			cout<<"El numero no es entero positivo o es cero. vuelva a introducirlo"<<endl;
 			system("pause");
 		}
-	}while(num < 1);
+	}while(num < 1);//hasta que el numero ingresado no sea un numero positivo no se sale del bucle;
 	 
-	 if(num % 2 == 0){
+	 if(num % 2 == 0){//se comprueba que el numero sea par o impar para mostrarlo en pantalla;
 	 	cout<<"\nEl numero "<<num<<" es par."<<endl;
 	 }else{
 	 	cout<<"\nEl numero "<<num<<" es impar."<<endl;
 	 };
 	
-	cout<<"El Factorial del numero "<<num<<" es: "<<fact(num)<<endl;
+	cout<<"El Factorial del numero "<<num<<" es: "<<fact(num)<<endl;//se muestra el factorial del numero;
 	system("pause");
 	 
 		
 }
 
 //conversor temp
-float toFaren(float c){
+float toFaren(float c){//devuelve temperatura en farenheit;
 	return ((c*1.8)+32);
 }
-float toCelsi(float f){
+float toCelsi(float f){//devuelve temperatura ne celsius;
 	return ((f-32)*0.555555556);
 }
 void convertor(){
 
 	
-	int opt;
-	try{
-		cout<<"================================================================================"<<endl;
-		cout<<"====================== Conversor Farenheit - Celsius ==========================="<<endl;
-		cout<<"================================================================================"<<endl;
-		cout<<"\t\t [1] Celsius a Farenheit\n"<<endl;
-		cout<<"\t\t [2] Farenheit a Celsius\n"<<endl;
-		cout<<"\t\t [Salir] cualquier otra tecla \n"<<endl;
-		cout<<"Opcion: ";
-		cin>>opt;
-		cout<<endl;
-		cin.clear();
-		cin.ignore();
-		switch(opt){
-			case 1:
-					float tempC;
-					do{
-						cout<<"Ingrese Temp en grado Celsius: ";
-						cin>>tempC;
-						cout<<endl;
-						cin.clear();
-						cin.ignore();
-						if(cin.fail()){
-							system("cls");
-							cout<<"El valor no fue numerico."<<endl;
-							system("pause");
-							system("cls");
-							continue;
-						};
-						break;
-					}while(cin.fail());
-					cout<<tempC<<" grados Celsius es igual a : "<<toFaren(tempC)<<" grados Farenheit."<<endl;
-			break;
-			case 2:
-					float tempF;
-					do{
-						cout<<"Ingrese Temp en grado Farenheit: ";
-						cin>>tempF;
-						cout<<endl;
-						cin.clear();
-						cin.ignore();
-						if(cin.fail()){
-							system("cls");
-							cout<<"El valor no fue numerico."<<endl;
-							system("pause");
-							system("cls");
-							continue;
-						};
-						break;
-					}while(cin.fail());
-					cout<<tempF<<" grados Farenheit es igual a : "<<toCelsi(tempF)<<" grados Celsius."<<endl;
-			break;
-			default:
-				cout<<"Continuara al Menu principal..."<<endl;
-				system("pause");
+	int opt;//opcion;
 
-		};
-		system("pause");
-	}
-	catch(int e){
-		cout<<e<<endl;
-	}
+	cout<<"================================================================================"<<endl;
+	cout<<"====================== Conversor Farenheit - Celsius ==========================="<<endl;
+	cout<<"================================================================================"<<endl;
+	cout<<"\t\t [1] Celsius a Farenheit\n"<<endl;
+	cout<<"\t\t [2] Farenheit a Celsius\n"<<endl;
+	cout<<"\t\t [Salir] cualquier otra tecla \n"<<endl;
+	cout<<"Opcion: ";
+	cin>>opt;
+	cout<<endl;
+	cin.clear();
+	cin.ignore();
+	switch(opt){
+		case 1://Celsius a Faren
+				float tempC;
+				do{
+					cout<<"Ingrese Temp en grado Celsius: ";
+					cin>>tempC;
+					cout<<endl;
+					cin.clear();
+					cin.ignore();
+					if(cin.fail()){
+						system("cls");
+						cout<<"El valor no fue numerico."<<endl;
+						system("pause");
+						system("cls");
+						continue;
+					};
+					break;
+				}while(cin.fail());//se valida que sea numero;
+				cout<<tempC<<" grados Celsius es igual a : "<<toFaren(tempC)<<" grados Farenheit."<<endl;//se muestra en pantalla la temperatura convertida;
+		break;
+		case 2:
+				float tempF;
+				do{
+					cout<<"Ingrese Temp en grado Farenheit: ";
+					cin>>tempF;
+					cout<<endl;
+					cin.clear();
+					cin.ignore();
+					if(cin.fail()){
+						system("cls");
+						cout<<"El valor no fue numerico."<<endl;
+						system("pause");
+						system("cls");
+						continue;
+					};
+					break;
+				}while(cin.fail());//se valida que sea numero;
+				cout<<tempF<<" grados Farenheit es igual a : "<<toCelsi(tempF)<<" grados Celsius."<<endl;//se muestra en pantalla la temperatura convertida;
+		break;
+		default:
+			cout<<"Continuara al Menu principal..."<<endl;
+			system("pause");
+
+	};
+	system("pause");//termina la ejeccion de la funcion;
 }
 
 //MAIN
@@ -628,7 +679,7 @@ int main (){
 		cout<<endl;
 		cin.clear();
 		cin.ignore();
-		
+		//si opt no se le ingreso un valor numerico, se le asigna 0 automaticamente;
 		switch(opt){
 			case 1:
 				nota();
@@ -649,9 +700,8 @@ int main (){
 				convertor();
 			break;											
 			default:
-				flag = cin.fail();
-				if(opt < 1 or opt > 6){
-					flag = 0;
+				if(opt < 1 or opt > 6){//si el valor de opt no esta en el rango [1,6] termina el programa;
+					flag = 0;//flag se igual a 0 o falso, por tanto termina el bucle;
 				};	
 		};
 	};
