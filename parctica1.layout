@@ -1,10 +1,10 @@
 [Editors]
 Order=0
-Focused=0
+Focused=-1
 [Editor_0]
 <<<<<<< HEAD
-CursorCol=1
-CursorRow=9
+CursorCol=20
+CursorRow=12
 TopLine=1
 ||||||| merged common ancestors
 CursorCol=17

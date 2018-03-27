@@ -1,0 +1,69 @@
+--------------------------------Trabajo practico de POO seccion 0407------------------------------------------
+	Profesor: Ramon Jimenez
+	
+	Desarrollarodes:
+		*Anderson Jimenez Santana 17-EIST-1-118*
+		*Alvaro michell Castro 17-EIST-1-072*
+		*Jean Garcia Rogriguez 17-EISN-1-124*
+
+1- 
+	El proyecto consta de de los archivos:
+			*practica1.dev
+			*mainPractica1.cpp
+			*Makefile.win
+			*mainPractica1.o
+			*practica1.exe 
+			
+2-
+	El programa que originalmente serian 6 diferentes, se intrego en uno, con todos los ejerecios
+	marcados en la hoja de practica.
+	
+3-
+	El programa consta de un menu principal, del cual la opciones seran los ejerecicios marcados por
+	la practica:
+		[1] impresion de nota.
+		[2] casa de cambio.
+		[3] nomina de pago.
+		[4] conversor de unidades.
+		[5] factorial de un numero positivo.
+		[6] conversor de temperatura.
+		
+	3.1-IMPRESION NOTA
+		Esta pide datos como nombre del estudiante, matricula,seccion, materia y profesor,
+		estos campos deben ser llenados ya que son obligatorios.
+		
+		luego pide las calificaciones en asistencia, trabajo practico, primer parcial y examen final
+		los cuales no pueden superar los limites que le corresponden:
+			*Asistencia [0,10].
+			*Trabajo practico [0,20].
+			*Primer parcial [0,20].
+			*Examen final [0,50].
+		luego de eso muestra la calificacion del estudiante.
+	3.2-CASA DE CAMBIO
+		Esta pide datos como nombre del cliente y su nacionalidad estos campos deben ser
+		llenados ya que son obligatorios.
+		
+		Luego pone a selecionar los tipos de cambios disponibles, elige del el deseado.
+		Luego ingresa la cantidad a cambiar y el programa le mostrara las operaciones de cambio.
+		
+	3.3-NOMINA DE PAGO
+		Esta pide el nombre del empleado(campo obligatorio).
+		Luego pide cuanto gana por hora, cuantas horas labora normalmente a la quincena y las horas
+		extra laboradas(la suma de estas no debe exeder 88 horas, ya que este es el maximo de horas que se trabaja.)
+		con lo datos introducidos mostrara la nomina del empleado con los descuentos realizados de afp y ars.
+	
+	3.4-CONVERSION DE UNIDADES
+		Esta le pone a seleccionar el tipo de conversion de medida deseada, luego pide el valor
+		de la medida a cambiar, para luego mostrarle su valor en otra unidad de medida.
+		
+	3.5-FACTORIAL DE UN NUMERO
+		Este le pide ingresar un numero(entero positivo), para luego mostrarle si es par o impar
+		y mostrar su factorial.
+	3.6-CONVERSON DE TEMPERATURA
+		Este le pone a elegir el tipo de conversion, luego le pide que ingrese el valor de la temperatura
+		en  el grado a cambiar para luego mostrarle su valor en el al que deseo cambiar.
+		
+-----------------------------------------------------------------------------------------------------------------------
+		
+		
+
